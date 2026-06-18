@@ -11,11 +11,14 @@ export default function ResumeContent() {
             {resume.tagline.map((line, i) => <p key={i}>{line}</p>)}
           </div>
         </div>
-        <div className="header-contact">
-          <span>{resume.phone}</span>
-          <span>{resume.email}</span>
-          <a href={resume.github} target="_blank" rel="noreferrer">{resume.github}</a>
-          <span>{resume.location}</span>
+        <div className="header-right">
+          <img className="resume-photo" src={`${import.meta.env.BASE_URL}photo.jpg`} alt={resume.name} />
+          <div className="header-contact">
+            <span>{resume.phone}</span>
+            <span>{resume.email}</span>
+            <a href={resume.github} target="_blank" rel="noreferrer">{resume.github}</a>
+            <span>{resume.location}</span>
+          </div>
         </div>
       </header>
 

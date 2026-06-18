@@ -33,6 +33,22 @@
   gap: 40px;
 }
 
+.theme-minimal .header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.theme-minimal .resume-photo {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
+
 .theme-minimal .resume-name {
   font-size: 2.4rem;
   font-weight: 700;
@@ -70,7 +86,6 @@
   text-align: right;
   font-size: 0.85rem;
   color: var(--text-muted);
-  flex-shrink: 0;
 }
 
 .theme-minimal .resume-section {
