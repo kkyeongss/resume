@@ -168,6 +168,11 @@
   user-select: none;
 }
 
+.theme-minimal .item-link-status {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
 .theme-minimal .item-tags {
   display: flex;
   flex-wrap: wrap;

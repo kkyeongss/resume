@@ -80,6 +80,10 @@ export default function ResumeContent() {
                   <span className="item-link-divider">|</span>
                   <a className="item-link item-link-demo" href={proj.demo} target="_blank" rel="noreferrer">Demo</a>
                 </>}
+                {!proj.demo && proj.demoStatus && <>
+                  <span className="item-link-divider">|</span>
+                  <span className="item-link-status">{proj.demoStatus}</span>
+                </>}
               </div>
             </div>
           ))}
