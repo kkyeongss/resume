@@ -63,7 +63,7 @@
       "stack": ["Java", "Spring Boot", "Spring WebFlux", "React", "Vite", "Upbit WebSocket API"],
       "description": "Spring WebFlux 학습 목적으로 개발한 실시간 암호화폐 시세 대시보드. Upbit WebSocket으로 265개 코인 시세를 구독하고 SSE로 브라우저에 푸시. 코인 검색·추가·가격 알림 기능 구현.",
       "link": "https://github.com/kkyeongss/coinflux",
-      "demoStatus": "배포 준비 중"
+      "demo": "https://coinflux.duckdns.org"
     },
     {
       "name": "Piggy - 가족 가계부 웹앱",
