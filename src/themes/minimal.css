@@ -246,11 +246,21 @@
   margin-left: 16px;
 }
 
-.theme-minimal .activity-type {
-  font-size: 0.72rem;
+.theme-minimal .activity-group {
+  margin-bottom: 24px;
+}
+
+.theme-minimal .activity-group:last-child {
+  margin-bottom: 0;
+}
+
+.theme-minimal .activity-group-title {
+  font-size: 0.78rem;
+  font-weight: 600;
   color: var(--accent);
-  background: var(--tag-bg);
-  padding: 2px 8px;
-  border-radius: 100px;
-  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
 }

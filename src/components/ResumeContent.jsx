@@ -106,20 +106,32 @@ export default function ResumeContent() {
 
         <section className="resume-section">
           <h2 className="section-title">인턴·대외활동</h2>
-          {resume.activities.map((act, i) => (
-            <div key={i} className="item">
-              <div className="item-header">
-                <div>
-                  <h3 className="item-title">{act.name}</h3>
-                  <p className="item-sub">{act.role}</p>
-                </div>
-                <div className="item-right">
-                  <span className="activity-type">{act.type}</span>
-                  <span className="item-period">{act.period}</span>
-                </div>
+          {(() => {
+            const startYear = p => parseInt(p.split('.')[0])
+            const grouped = resume.activities.reduce((acc, act) => {
+              if (!acc[act.type]) acc[act.type] = []
+              acc[act.type].push(act)
+              return acc
+            }, {})
+            Object.values(grouped).forEach(g => g.sort((a, b) => startYear(b.period) - startYear(a.period)))
+            const sortedTypes = Object.entries(grouped).sort((a, b) => startYear(b[1][0].period) - startYear(a[1][0].period))
+            return sortedTypes.map(([type, acts]) => (
+              <div key={type} className="activity-group">
+                <h4 className="activity-group-title">{type}</h4>
+                {acts.map((act, i) => (
+                  <div key={i} className="item">
+                    <div className="item-header">
+                      <div>
+                        <h3 className="item-title">{act.name}</h3>
+                        <p className="item-sub">{act.role}</p>
+                      </div>
+                      <span className="item-period">{act.period}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-          ))}
+            ))
+          })()}
         </section>
 
         <section className="resume-section">
