@@ -16,7 +16,7 @@ export default function ResumeContent() {
           <div className="header-contact">
             <span>{resume.phone}</span>
             <span>{resume.email}</span>
-            <a href={resume.github} target="_blank" rel="noreferrer">{resume.github}</a>
+            <a href={resume.github} target="_blank" rel="noreferrer">GitHub</a>
             <span>{resume.location}</span>
           </div>
         </div>
