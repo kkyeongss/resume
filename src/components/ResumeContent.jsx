@@ -4,65 +4,71 @@ export default function ResumeContent() {
   return (
     <div className="resume">
       <header className="resume-header">
-        <div className="header-main">
+        <img className="resume-photo" src={`${import.meta.env.BASE_URL}photo.jpg`} alt={resume.name} />
+        <div className="resume-header-text">
           <h1 className="resume-name">{resume.name}</h1>
           <p className="resume-role">{resume.role}</p>
-          <div className="resume-summary">
-            {resume.tagline.map((line, i) => <p key={i}>{line}</p>)}
-          </div>
-        </div>
-        <div className="header-right">
-          <img className="resume-photo" src={`${import.meta.env.BASE_URL}photo.jpg`} alt={resume.name} />
-          <div className="header-contact">
-            <span>{resume.phone}</span>
-            <span>{resume.email}</span>
+          <div className="resume-contact">
+            <a href={`mailto:${resume.email}`}>{resume.email}</a>
+            <span className="dot">·</span>
             <a href={resume.github} target="_blank" rel="noreferrer">GitHub</a>
+            <span className="dot">·</span>
             <span>{resume.location}</span>
           </div>
         </div>
       </header>
 
-      <main className="resume-body">
-        <section className="resume-section">
-          <h2 className="section-title">기술 스택</h2>
-          <div className="skills-grid">
-            {Object.entries(resume.skills).map(([category, skills]) => (
-              <div key={category} className="skill-group">
-                <h4 className="skill-category">{category}</h4>
-                <div className="skill-tags">
-                  {skills.map((s, i) => <span key={i} className="tag">{s}</span>)}
-                </div>
+      <section className="resume-section">
+        <h2 className="section-title">경력</h2>
+        {resume.experience.map((exp, i) => (
+          <div key={i} className="item">
+            <div className="item-header">
+              <div>
+                <h3 className="item-title">{exp.company}</h3>
+                <p className="item-sub">
+                  {exp.role}{exp.workplace && ` · ${exp.workplace} 근무`}
+                </p>
               </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="resume-section">
-          <h2 className="section-title">경력</h2>
-          {resume.experience.map((exp, i) => (
-            <div key={i} className="item">
-              <div className="item-header">
-                <div>
-                  <h3 className="item-title">{exp.company}</h3>
-                  <p className="item-sub">{exp.role}</p>
-                </div>
-                <span className="item-period">{exp.period}</span>
-              </div>
-              <ul className="item-list">
-                {exp.description.map((d, j) => <li key={j}>{d}</li>)}
-              </ul>
-              {exp.stack && (
-                <div className="item-tags" style={{ marginTop: '12px' }}>
-                  {exp.stack.map((s, j) => <span key={j} className="tag">{s}</span>)}
-                </div>
-              )}
+              <span className="item-period">{exp.period}</span>
             </div>
-          ))}
-        </section>
+            <ul className="item-list">
+              {exp.description.map((d, j) => <li key={j}>{d}</li>)}
+            </ul>
+            {exp.stack && (
+              <div className="item-tags" style={{ marginTop: '12px' }}>
+                {exp.stack.map((s, j) => <span key={j} className="tag">{s}</span>)}
+              </div>
+            )}
+            {exp.details && (
+              <div className="item-details">
+                {exp.details.map((det, j) => (
+                  <div key={j} className="detail-item">
+                    <div className="detail-header">
+                      <h5 className="detail-title">{det.title}</h5>
+                      <span className="detail-period">{det.period}</span>
+                    </div>
+                    <ul className="detail-list">
+                      {det.description.map((d, k) => <li key={k}>{d}</li>)}
+                    </ul>
+                    {det.stack && (
+                      <div className="item-tags" style={{ marginTop: '8px' }}>
+                        {det.stack.map((s, k) => <span key={k} className="tag">{s}</span>)}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </section>
 
-        <section className="resume-section">
-          <h2 className="section-title">사이드 프로젝트</h2>
-          {resume.projects.map((proj, i) => (
+      <section className="resume-section">
+        <h2 className="section-title">기타 경험</h2>
+
+        <div className="other-group">
+          <h3 className="other-title">사이드 프로젝트</h3>
+          {resume.otherExperience.projects.map((proj, i) => (
             <div key={i} className="item">
               <div className="item-header">
                 <div>
@@ -87,81 +93,48 @@ export default function ResumeContent() {
               </div>
             </div>
           ))}
-        </section>
+        </div>
 
-        <section className="resume-section">
-          <h2 className="section-title">자격증</h2>
+        <div className="other-group">
+          <h3 className="other-title">자격증</h3>
           <div className="cert-grid">
-            {resume.certificates.map((cert, i) => (
+            {resume.otherExperience.certificates.map((cert, i) => (
               <div key={i} className="cert-item">
                 <div className="cert-name">{cert.name}</div>
                 <div className="cert-meta">
-                  <span className="cert-issuer">{cert.issuer}</span>
-                  <span className="cert-date">{cert.date}</span>
+                  <span>{cert.issuer}</span>
+                  <span>{cert.date}</span>
                 </div>
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="resume-section">
-          <h2 className="section-title">인턴·대외활동</h2>
-          {(() => {
-            const startYear = p => parseInt(p.split('.')[0])
-            const grouped = resume.activities.reduce((acc, act) => {
-              if (!acc[act.type]) acc[act.type] = []
-              acc[act.type].push(act)
-              return acc
-            }, {})
-            Object.values(grouped).forEach(g => g.sort((a, b) => startYear(b.period) - startYear(a.period)))
-            const sortedTypes = Object.entries(grouped).sort((a, b) => startYear(b[1][0].period) - startYear(a[1][0].period))
-            return sortedTypes.map(([type, acts]) => (
-              <div key={type} className="activity-group">
-                <h4 className="activity-group-title">{type}</h4>
-                {acts.map((act, i) => (
-                  <div key={i} className="item">
-                    <div className="item-header">
-                      <div>
-                        <h3 className="item-title">{act.name}</h3>
-                        <p className="item-sub">{act.role}</p>
-                      </div>
-                      <span className="item-period">{act.period}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))
-          })()}
-        </section>
-
-        <section className="resume-section">
-          <h2 className="section-title">학력</h2>
-          {resume.education.map((edu, i) => (
-            <div key={i} className="item">
-              <div className="item-header">
-                <div>
-                  <h3 className="item-title">{edu.school}</h3>
-                  <p className="item-sub">
-                    {edu.major} · 복수전공 {edu.doubleMajor} · {edu.degree}
-                  </p>
-                  <p className="item-sub">학점 {edu.gpa}</p>
-                </div>
-                <span className="item-period">{edu.period}</span>
+      <section className="resume-section">
+        <h2 className="section-title">기술 스택</h2>
+        <div className="skill-groups">
+          {Object.entries(resume.skills).map(([category, skills]) => (
+            <div key={category} className="skill-group">
+              <h4 className="skill-cat">{category}</h4>
+              <div className="skill-tags">
+                {skills.map((s, i) => <span key={i} className="tag">{s}</span>)}
               </div>
             </div>
           ))}
-        </section>
+        </div>
+      </section>
 
-        <section className="resume-section">
-          <h2 className="section-title">병역</h2>
-          <div className="item">
-            <div className="item-header">
-              <h3 className="item-title">{resume.military.branch}</h3>
-              <span className="item-period">{resume.military.period}</span>
-            </div>
+      <section className="resume-section">
+        <h2 className="section-title">학력</h2>
+        {resume.education.map((edu, i) => (
+          <div key={i} className="edu-item">
+            <div className="edu-school">{edu.school}</div>
+            <div className="edu-meta">{edu.major}</div>
+            <div className="edu-period">{edu.period}</div>
           </div>
-        </section>
-      </main>
+        ))}
+      </section>
     </div>
   )
 }
